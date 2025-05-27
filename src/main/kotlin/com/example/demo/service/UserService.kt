@@ -22,14 +22,16 @@ class UserService(
 
     @Transactional
     fun registerUser(registrationDto: UserRegistrationDto): User {
-        if (userRepository.existsByUsername(registrationDto.username)) {
-            throw IllegalArgumentException("Username already exists")
-        }
-        if (userRepository.existsByEmail(registrationDto.email)) {
-            throw IllegalArgumentException("Email already exists")
-        }
         if (registrationDto.password != registrationDto.confirmPassword) {
-            throw IllegalArgumentException("Passwords do not match")
+            throw IllegalStateException("Passwords do not match")
+        }
+
+        if (userRepository.findByUsername(registrationDto.username) != null) {
+            throw IllegalStateException("Username already exists")
+        }
+
+        if (userRepository.findByEmail(registrationDto.email) != null) {
+            throw IllegalStateException("Email already exists")
         }
 
         val user = User(

@@ -1,14 +1,15 @@
 package com.example.demo.controller
 
 import com.example.demo.dto.UserRegistrationDto
+import com.example.demo.model.User
 import com.example.demo.service.UserService
 import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
@@ -53,5 +54,18 @@ class AuthController(private val userService: UserService) {
         userService.registerUser(userRegistrationDto)
         redirectAttributes.addFlashAttribute("successMessage", "Registration successful! Please login.")
         return "redirect:/login"
+    }
+
+    @PostMapping("/api/auth/register")
+    @ResponseBody
+    fun registerUserApi(@Valid @RequestBody userRegistrationDto: UserRegistrationDto): ResponseEntity<User> {
+        return try {
+            val user = userService.registerUser(userRegistrationDto)
+            ResponseEntity.ok(user)
+        } catch (e: IllegalStateException) {
+            ResponseEntity.status(HttpStatus.CONFLICT).build()
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+        }
     }
 } 
