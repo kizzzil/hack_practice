@@ -8,9 +8,3 @@ class LoginController {
     @GetMapping("/login")
     fun home(): String = "Coming soon..\nThere will be a login page here"
 }
-
-@RestController
-class RegistrationController {
-    @GetMapping("/registration")
-    fun home(): String = "Coming soon..\nThere will be a registration page here"
-}
