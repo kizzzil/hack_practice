@@ -13,17 +13,20 @@ import jakarta.validation.constraints.Size
         UniqueConstraint(columnNames = ["email"])
     ]
 )
-data class User(
+class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    var id: Long = 0,
 
     @Column(nullable = false, unique = true)
-    val username: String,
+    var username: String = "",
 
     @Column(nullable = false, unique = true)
-    val email: String,
+    var email: String = "",
 
     @Column(nullable = false)
-    val password: String
-) 
+    var password: String = ""
+) {
+    // Default constructor required by JPA
+    constructor() : this(0, "", "", "")
+} 

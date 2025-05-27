@@ -111,4 +111,24 @@ input[type="password"]:focus {
 
 .form-footer a:hover {
     text-decoration: underline;
+}
+
+/* Dashboard styles */
+.user-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.user-info p {
+    margin: 5px 0;
+}
+
+.dashboard-actions {
+    margin-top: 30px;
+}
+
+.dashboard-actions .btn {
+    margin-top: 10px;
 } 

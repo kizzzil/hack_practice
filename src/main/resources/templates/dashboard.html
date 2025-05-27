@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Your Dashboard</h1>
+        
+        <div class="user-info">
+            <p>Welcome, <span sec:authentication="name">Username</span>!</p>
+            <p>Your role: <span sec:authentication="principal.authorities">ROLE_USER</span></p>
+        </div>
+
+        <div class="dashboard-actions">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn">Logout</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html> 
