@@ -1,8 +1,6 @@
 package com.example.demo.dto
 
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Size
+import jakarta.validation.constraints.*
 
 data class UserRegistrationDto(
     @field:NotBlank(message = "Username is required")
@@ -10,11 +8,11 @@ data class UserRegistrationDto(
     val username: String = "",
 
     @field:NotBlank(message = "Email is required")
-    @field:Email(message = "Email should be valid")
+    @field:Email(message = "Please provide a valid email address")
     val email: String = "",
 
     @field:NotBlank(message = "Password is required")
-    @field:Size(min = 6, message = "Password must be at least 6 characters")
+    @field:Size(min = 6, message = "Password must be at least 6 characters long")
     val password: String = "",
 
     @field:NotBlank(message = "Password confirmation is required")

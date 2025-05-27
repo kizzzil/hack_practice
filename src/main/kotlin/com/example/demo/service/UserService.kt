@@ -3,11 +3,22 @@ package com.example.demo.service
 import com.example.demo.dto.UserRegistrationDto
 import com.example.demo.model.User
 import com.example.demo.repository.UserRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UserService(private val userRepository: UserRepository) {
+class UserService(
+    private val userRepository: UserRepository,
+    private val passwordEncoder: PasswordEncoder
+) {
+    fun isUsernameTaken(username: String): Boolean {
+        return userRepository.findByUsername(username) != null
+    }
+
+    fun isEmailTaken(email: String): Boolean {
+        return userRepository.findByEmail(email) != null
+    }
 
     @Transactional
     fun registerUser(registrationDto: UserRegistrationDto): User {
@@ -24,7 +35,7 @@ class UserService(private val userRepository: UserRepository) {
         val user = User(
             username = registrationDto.username,
             email = registrationDto.email,
-            password = registrationDto.password // Note: In a real application, you should hash the password
+            password = passwordEncoder.encode(registrationDto.password)
         )
 
         return userRepository.save(user)
